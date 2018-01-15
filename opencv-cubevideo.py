@@ -114,8 +114,8 @@ def processFrame(img):
         if(rect is not None):
             x,y,w,h = rect
             center = (x+w//2, y+h//2)
-            cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),10)
-            cv2.circle(img, center, 20, (0, 0, 255), -1)
+            cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),3)
+            cv2.circle(img, center, 8, (0, 0, 255), -1)
             pt2 = (10, 4 * img.shape[0] // 4)
             cv2.putText(img, str(center[0]) + ', ' + str(center[1]), pt2 ,cv2.FONT_HERSHEY_PLAIN, 3,textcolor, 2)
         cv2.putText(img,shapename, pt ,cv2.FONT_HERSHEY_PLAIN, 3,textcolor, 2)
