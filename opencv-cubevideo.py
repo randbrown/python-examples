@@ -47,6 +47,7 @@ def processFrame(img):
 
     # RGB to Gray scale conversion
     img_gray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
+    #img_gray = img
     
     cv2.imshow("Gray Converted Image",img_gray)
 
@@ -71,8 +72,6 @@ def processFrame(img):
     dilated_image = cv2.dilate(canny_image,kernel,iterations=1)
     cv2.imshow("Dilation", dilated_image)
     
-    dilated_image = cv2.dilate(canny_image,kernel,iterations=1)
-    cv2.imshow("Dilation", dilated_image)
     # dilated_image = cv2.medianBlur(dilated_image, 9)
     # cv2.imshow("Blur", dilated_image)
 
@@ -86,7 +85,8 @@ def processFrame(img):
     contours= sorted(contours, key = cv2.contourArea, reverse = True)[:1]
     pt = (10, 3 * img.shape[0] // 4)
     for cnt in contours:
-        approx = cv2.approxPolyDP(cnt,0.01*cv2.arcLength(cnt,True),True)
+        hull = cv2.convexHull(cnt)
+        approx = cv2.approxPolyDP(hull,0.01*cv2.arcLength(hull,True),True)
         print (len(approx))
         shapename = 'Unknown'
         textcolor = (255,255,255)
@@ -107,10 +107,10 @@ def processFrame(img):
             shapename="Blob"
             textcolor = [255,0,0]
         
-        shapename = shapename + ' ' + str(len(contours)) + ' ' + str(len(approx))
+        shapename = shapename + ' ' + str(len(approx))
         print (shapename)
-        cv2.drawContours(img,[cnt],-1,(255,0,0),3)
-        rect = cv2.boundingRect(cnt)
+        cv2.drawContours(img,[hull],-1,(255,0,0),3)
+        rect = cv2.boundingRect(hull)
         if(rect is not None):
             x,y,w,h = rect
             center = (x+w//2, y+h//2)
@@ -133,9 +133,9 @@ def processFrame(img):
     cv2.imshow("Corners",img)
     cv2.waitKey(1)
 
-cap = cv2.VideoCapture('videos/IMG_3567.MOV')
+#cap = cv2.VideoCapture('videos/IMG_3567.MOV')
 #cap = cv2.VideoCapture('videos/IMG_3568.MOV')
-#cap = cv2.VideoCapture('videos/IMG_3569.MOV')
+cap = cv2.VideoCapture('videos/IMG_3569.MOV')
 
 while(True):
     # Capture frame-by-frame
