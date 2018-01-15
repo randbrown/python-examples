@@ -84,7 +84,7 @@ def processFrame(img):
     # contours_img, contours, h = cv2.findContours(dilated_image, cv2.RETR_CCOMP, 2) #ok
     #import pdb; pdb.set_trace()
     contours= sorted(contours, key = cv2.contourArea, reverse = True)[:1]
-    pt = (180, 3 * img.shape[0] // 4)
+    pt = (10, 3 * img.shape[0] // 4)
     for cnt in contours:
         approx = cv2.approxPolyDP(cnt,0.01*cv2.arcLength(cnt,True),True)
         print (len(approx))
@@ -116,9 +116,9 @@ def processFrame(img):
             center = (x+w//2, y+h//2)
             cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),10)
             cv2.circle(img, center, 20, (0, 0, 255), -1)
-            pt2 = (180, 4 * img.shape[0] // 4)
-            cv2.putText(img, str(center[0]) + ', ' + str(center[1]), pt2 ,cv2.FONT_HERSHEY_PLAIN, 10,textcolor, 6)
-        cv2.putText(img,shapename, pt ,cv2.FONT_HERSHEY_PLAIN, 10,textcolor, 6)
+            pt2 = (10, 4 * img.shape[0] // 4)
+            cv2.putText(img, str(center[0]) + ', ' + str(center[1]), pt2 ,cv2.FONT_HERSHEY_PLAIN, 3,textcolor, 2)
+        cv2.putText(img,shapename, pt ,cv2.FONT_HERSHEY_PLAIN, 3,textcolor, 2)
 
     cv2.imshow('Shape',img)
 
@@ -133,9 +133,9 @@ def processFrame(img):
     cv2.imshow("Corners",img)
     cv2.waitKey(1)
 
-#cap = cv2.VideoCapture('videos/IMG_3567.MOV')
+cap = cv2.VideoCapture('videos/IMG_3567.MOV')
 #cap = cv2.VideoCapture('videos/IMG_3568.MOV')
-cap = cv2.VideoCapture('videos/IMG_3569.MOV')
+#cap = cv2.VideoCapture('videos/IMG_3569.MOV')
 
 while(True):
     # Capture frame-by-frame
