@@ -4,6 +4,7 @@ import time
 
 cv2.namedWindow("Original Image",cv2.WINDOW_NORMAL)
 cv2.namedWindow("Canny",cv2.WINDOW_NORMAL)
+cv2.namedWindow("Shape",cv2.WINDOW_NORMAL)
 
 def analyzeContour(img, cnt, idx):
     img_annotated = img.copy()
@@ -42,7 +43,7 @@ def analyzeContour(img, cnt, idx):
         pt2 = (10, 4 * img_annotated.shape[0] // 4)
         cv2.putText(img_annotated, str(center[0]) + ', ' + str(center[1]), pt2 ,cv2.FONT_HERSHEY_PLAIN, 3,textcolor, 2)
     cv2.putText(img_annotated,shapename, pt ,cv2.FONT_HERSHEY_PLAIN, 3,textcolor, 2)
-    cv2.imshow('Shape ' + str(idx),img_annotated)
+    cv2.imshow('Shape', img_annotated)
 
 def processFrame(img):
     if(img is None):
