@@ -67,12 +67,11 @@ def processFrame(img):
     img = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
     
     # Noise removal with iterative bilateral filter(removes noise while preserving edges)
-    # noise_removal = cv2.bilateralFilter(img_gray,9,75,75)
-    # noise_removal = cv2.bilateralFilter(img_gray,9,75,75)
-    # cv2.imshow("Noise Removed Image",noise_removal)
-    # # Thresholding the image
-    # ret,thresh_image = cv2.threshold(noise_removal,0,255,cv2.THRESH_OTSU)
-    # cv2.imshow("Image Thresholding",thresh_image)
+    img = cv2.bilateralFilter(img,9,75,75)
+    cv2.imshow("Noise Removed Image",img)
+    # Thresholding the image
+    ret,img = cv2.threshold(img,0,255,cv2.THRESH_OTSU)
+    cv2.imshow("Image Thresholding",img)
 
     # Applying Canny Edge detection
     #img = cv2.Canny(img,250,255)
