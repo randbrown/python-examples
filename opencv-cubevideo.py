@@ -33,15 +33,19 @@ def analyzeContour(img, cnt, idx):
     
     shapename = shapename + ' ' + str(len(approx))
     print (shapename)
-    cv2.drawContours(img_annotated,[hull],-1,(255,0,0),3)
-    rect = cv2.boundingRect(hull)
-    if(rect is not None):
-        x,y,w,h = rect
-        center = (x+w//2, y+h//2)
-        cv2.rectangle(img_annotated,(x,y),(x+w,y+h),(0,255,0),3)
-        cv2.circle(img_annotated, center, 8, (0, 0, 255), -1)
-        pt2 = (10, 4 * img_annotated.shape[0] // 4)
-        cv2.putText(img_annotated, str(center[0]) + ', ' + str(center[1]), pt2 ,cv2.FONT_HERSHEY_PLAIN, 3,textcolor, 2)
+    # cv2.drawContours(img_annotated,[hull],-1,(255,0,0),3)
+    #rect = cv2.boundingRect(hull)
+    rect = cv2.minAreaRect(hull)
+    box = cv2.boxPoints(rect)
+    box = np.int0(box)
+    rect = box
+    cv2.drawContours(img_annotated,[box],0,(0,0,255),2)
+    M = cv2.moments(cnt)
+    center = (int(M['m10']/M['m00']), int(M['m01']/M['m00']))
+    # cv2.rectangle(img_annotated,(x,y),(x+w,y+h),(0,255,0),3)
+    cv2.circle(img_annotated, center, 8, (0, 0, 255), -1)
+    pt2 = (10, 4 * img_annotated.shape[0] // 4)
+    cv2.putText(img_annotated, str(center[0]) + ', ' + str(center[1]), pt2 ,cv2.FONT_HERSHEY_PLAIN, 3,textcolor, 2)
     cv2.putText(img_annotated,shapename, pt ,cv2.FONT_HERSHEY_PLAIN, 3,textcolor, 2)
     cv2.imshow('Shape', img_annotated)
 
